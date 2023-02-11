@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yumamur <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/11 16:45:49 by yumamur           #+#    #+#             */
+/*   Updated: 2023/02/11 16:51:12 by yumamur          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line.h"
 
 char	*get_to_second_line(char *keep)
@@ -34,7 +46,7 @@ char	*get_first_line(const char *keep)
 	i = 0;
 	if (!keep[i])
 		return (NULL);
-	while(keep[i] && keep[i] != '\n')
+	while (keep[i] && keep[i] != '\n')
 		i++;
 	ret = malloc(i + 2);
 	if (!ret)
@@ -75,7 +87,7 @@ char	*read_line(char *keep, int fd)
 	return (keep);
 }
 
-char	*get_next_line(int	fd)
+char	*get_next_line(int fd)
 {
 	char		*ret;
 	static char	*keep;

@@ -15,7 +15,6 @@ int	main(void)
 	printf("fd0 1\t=\t%s\n", get_next_line(fd0));
 	printf("fd1 1\t=\t%s\n", get_next_line(fd1));
 	printf("fd2 1\t=\t%s\n", get_next_line(fd2));
-	printf("err 1\t=\t%s\n", get_next_line(paat));
 	printf("err 2\t=\t%s\n", get_next_line(321));
 	printf("fd0 2\t=\t%s\n", get_next_line(fd0));
 	printf("fd1 2\t=\t%s\n", get_next_line(fd1));

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yumamur <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/11 16:46:14 by yumamur           #+#    #+#             */
+/*   Updated: 2023/02/11 18:19:47 by yumamur          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line_bonus.h"
 #include <stdio.h>
 
@@ -13,7 +25,6 @@ t_list	*which_file(t_list *head, int fd)
 		if (!curr->next)
 		{
 			curr->next = malloc(sizeof(t_list));
-			curr->next->prev = curr;
 			curr->next->next = NULL;
 			curr->next->content = NULL;
 			curr->next->nbr = 0;
@@ -60,7 +71,7 @@ char	*get_first_line(const char *content)
 	i = 0;
 	if (!content[i])
 		return (NULL);
-	while(content[i] && content[i] != '\n')
+	while (content[i] && content[i] != '\n')
 		i++;
 	ret = malloc(i + 2);
 	if (!ret)
@@ -101,17 +112,16 @@ void	read_line(t_list *curr)
 	}
 	free(concat);
 }
-char	*get_next_line(int	fd)
+
+char	*get_next_line(int fd)
 {
 	char			*ret;
-	static t_list	*head;
+	static t_list	head;
 	t_list			*curr;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	if (!head)
-		head = malloc(sizeof(t_list));
-	curr = which_file(head, fd);
+	curr = which_file(&head, fd);
 	read_line(curr);
 	ret = get_first_line(curr->content);
 	curr->content = get_to_second_line(curr->content);

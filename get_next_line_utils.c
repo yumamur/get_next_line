@@ -1,6 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yumamur <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/11 16:46:07 by yumamur           #+#    #+#             */
+/*   Updated: 2023/02/11 17:15:51 by yumamur          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line.h"
 #include "get_next_line_bonus.h"
-#include <stdio.h>
 
 void	*ft_calloc(size_t count, size_t size)
 {
@@ -17,7 +28,7 @@ void	*ft_calloc(size_t count, size_t size)
 	return (pt);
 }
 
-char  *ft_strjoin(char *s1, char *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*str;
 	int		i1;
@@ -46,9 +57,9 @@ char  *ft_strjoin(char *s1, char *s2)
 
 int	ft_strchr(char *str, int c)
 {
-  int i;
+	int	i;
 
-  i = 0;
+	i = 0;
 	if (!str)
 		return (0);
 	while (str[i] != '\0')

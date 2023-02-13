@@ -6,23 +6,22 @@
 /*   By: yumamur <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 16:46:14 by yumamur           #+#    #+#             */
-/*   Updated: 2023/02/11 18:19:47 by yumamur          ###   ########.fr       */
+/*   Updated: 2023/02/13 20:24:22 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
-#include <stdio.h>
 
 t_list	*which_file(t_list *head, int fd)
 {
 	t_list	*curr;
 
 	curr = head;
-	if (curr->nbr == (fd + 1))
+	if (curr->nbr == (fd + 1) && fd >= 0)
 		return (curr);
 	while (curr->nbr)
 	{
-		if (!curr->next)
+		if (!curr->next && fd >= 0)
 		{
 			curr->next = malloc(sizeof(t_list));
 			curr->next->next = NULL;
@@ -55,9 +54,8 @@ char	*get_to_second_line(char *content)
 	if (!ret)
 		return (NULL);
 	i2 = 0;
-	i1++;
-	while (content[i1])
-		ret[i2++] = content[i1++];
+	while (content[++i1])
+		ret[i2++] = content[i1];
 	ret[i2] = '\0';
 	free(content);
 	return (ret);
@@ -93,7 +91,7 @@ void	read_line(t_list *curr)
 	char	*concat;
 	int		bytes_readed;
 
-	concat = ft_calloc(BUFFER_SIZE + 1, 1);
+	concat = malloc(BUFFER_SIZE + 1);
 	if (!concat)
 		return ;
 	bytes_readed = 1;

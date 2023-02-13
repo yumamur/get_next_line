@@ -6,13 +6,13 @@
 /*   By: yumamur <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 16:45:49 by yumamur           #+#    #+#             */
-/*   Updated: 2023/02/11 16:51:12 by yumamur          ###   ########.fr       */
+/*   Updated: 2023/02/13 18:50:36 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*get_to_second_line(char *keep)
+static char	*get_to_second_line(char *keep)
 {
 	char	*ret;
 	int		i1;
@@ -68,7 +68,7 @@ char	*read_line(char *keep, int fd)
 	char	*concat;
 	int		bytes_readed;
 
-	concat = ft_calloc(BUFFER_SIZE + 1, 1);
+	concat = malloc(BUFFER_SIZE + 1);
 	if (!concat)
 		return (NULL);
 	bytes_readed = 1;

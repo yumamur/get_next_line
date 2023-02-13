@@ -6,26 +6,11 @@
 /*   By: yumamur <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 16:47:17 by yumamur           #+#    #+#             */
-/*   Updated: 2023/02/11 17:16:32 by yumamur          ###   ########.fr       */
+/*   Updated: 2023/02/13 18:54:07 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
-
-void	*ft_calloc(size_t count, size_t size)
-{
-	void	*pt;
-	int		i;
-
-	i = count * size;
-	pt = malloc(i);
-	while (i)
-	{
-		((unsigned char *)pt)[i] = 0;
-		i--;
-	}
-	return (pt);
-}
 
 char	*ft_strjoin(char *s1, char *s2)
 {

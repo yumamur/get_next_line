@@ -6,7 +6,7 @@
 /*   By: yumamur <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 16:46:14 by yumamur           #+#    #+#             */
-/*   Updated: 2023/02/13 20:24:22 by yumamur          ###   ########.fr       */
+/*   Updated: 2023/02/15 00:04:19 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,17 @@ t_list	*which_file(t_list *head, int fd)
 		if (!curr->next && fd >= 0)
 		{
 			curr->next = malloc(sizeof(t_list));
-			curr->next->next = NULL;
+			if (!curr->next)
+				return (NULL);
 			curr->next->content = NULL;
 			curr->next->nbr = 0;
+			curr->next->next = NULL;
 		}
 		curr = curr->next;
-		if (curr->nbr == (fd + 1))
+		if (curr->nbr == ((unsigned int )fd) + 1)
 			return (curr);
 	}
-	curr->nbr = (fd + 1);
+	curr->nbr = ((unsigned int )fd) + 1;
 	return (curr);
 }
 

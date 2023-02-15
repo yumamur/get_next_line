@@ -10,9 +10,12 @@ int	main(void)
 	int	fd2;
 
 	fd1 = open("txt", O_RDONLY);
+	fd2 = open("txt2", O_RDONLY);
+	printf("fd1 1\t=\t%s\n", get_next_line(fd1));
+	printf("fd2 1\t=\t%s\n", get_next_line(fd2));
+	printf("fd1 2\t=\t%s\n", get_next_line(fd1));
+	printf("fd2 2\t=\t%s\n", get_next_line(fd2));
 	close(fd1);
-	printf("fd1 1\t=\t%s\n", get_next_line(fd1));
-	printf("fd1 1\t=\t%s\n", get_next_line(-1));
-	printf("fd1 1\t=\t%s\n", get_next_line(100));
-	printf("fd1 1\t=\t%s\n", get_next_line(fd1));
+	printf("fd1 c\t=\t%s\n", get_next_line(fd1));
+	printf("fd2 3\t=\t%s\n", get_next_line(fd2));
 }

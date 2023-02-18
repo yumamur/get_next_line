@@ -12,12 +12,13 @@
 
 #include "get_next_line_bonus.h"
 
+
 t_list	*which_file(t_list *head, int fd)
 {
 	t_list	*curr;
 
 	curr = head;
-	if (curr->nbr == (fd + 1) && fd >= 0)
+	if (curr->nbr == ((unsigned int)fd + 1) && fd >= 0)
 		return (curr);
 	while (curr->nbr)
 	{
@@ -27,6 +28,7 @@ t_list	*which_file(t_list *head, int fd)
 			if (!curr->next)
 				return (NULL);
 			curr->next->content = NULL;
+			curr->next->prev = curr;
 			curr->next->nbr = 0;
 			curr->next->next = NULL;
 		}
@@ -102,9 +104,9 @@ void	read_line(t_list *curr)
 		bytes_readed = read((curr->nbr - 1), concat, BUFFER_SIZE);
 		if (bytes_readed == -1)
 		{
+			free(curr->content);
 			free(concat);
-			curr->content = malloc(1);
-			(curr->content)[0] = '\0';
+			curr->content = NULL;
 			return ;
 		}
 		concat[bytes_readed] = '\0';
@@ -123,6 +125,18 @@ char	*get_next_line(int fd)
 		return (NULL);
 	curr = which_file(&head, fd);
 	read_line(curr);
+	if (curr->content == NULL)
+	{
+		if (curr != &head)
+			curr->prev->next = curr->next;
+		if (curr->next)
+			curr->next->prev = curr->prev;
+		if (curr != &head)
+			free(curr);
+		if (curr == &head)
+			head.content = NULL;
+		return NULL;
+	}
 	ret = get_first_line(curr->content);
 	curr->content = get_to_second_line(curr->content);
 	return (ret);

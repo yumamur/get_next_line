@@ -24,6 +24,7 @@ typedef struct s_list
 {
 	char			*content;
 	struct s_list	*next;
+	struct s_list	*prev;
 	unsigned int	nbr;
 }					t_list;
 

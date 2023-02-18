@@ -77,6 +77,7 @@ char	*read_line(char *keep, int fd)
 		bytes_readed = read(fd, concat, BUFFER_SIZE);
 		if (bytes_readed == -1)
 		{
+			free(keep);
 			free(concat);
 			return (NULL);
 		}

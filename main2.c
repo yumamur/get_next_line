@@ -1,21 +1,22 @@
-#include <fcntl.h>
-#include <stdio.h>
-//#include "get_next_line.h"
 #include "get_next_line_bonus.h"
+#include <stdio.h>
+#include <fcntl.h>
 
-int	main(void)
+int main()
 {
-	int	fd0;
-	int	fd1;
-	int	fd2;
+	int fd = open("/Users/yumamur/francinette/tests/get_next_line/fsoares/bonus.c", O_RDONLY);
+	char *tmp;
+	int i=0;
 
-	fd1 = open("txt", O_RDONLY);
-	fd2 = open("txt2", O_RDONLY);
-	printf("fd1 1\t=\t%s\n", get_next_line(fd1));
-	printf("fd2 1\t=\t%s\n", get_next_line(fd2));
-	printf("fd1 2\t=\t%s\n", get_next_line(fd1));
-	printf("fd2 2\t=\t%s\n", get_next_line(fd2));
-	close(fd1);
-	printf("fd1 c\t=\t%s\n", get_next_line(fd1));
-	printf("fd2 3\t=\t%s\n", get_next_line(fd2));
+	while (1)
+	{
+		i++;
+		if(i==29)
+			break;
+		tmp = get_next_line(fd);
+		free(tmp);
+	}
+	tmp = get_next_line(fd);
+	printf("%s", tmp);
+	free(tmp);
 }

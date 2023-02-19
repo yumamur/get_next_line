@@ -6,25 +6,25 @@
 /*   By: yumamur <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 16:46:14 by yumamur           #+#    #+#             */
-/*   Updated: 2023/02/15 00:04:19 by yumamur          ###   ########.fr       */
+/*   Updated: 2023/02/19 13:50:00 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
-
+#include <stdio.h>
 
 t_list	*which_file(t_list *head, int fd)
 {
 	t_list	*curr;
 
 	curr = head;
-	if (curr->nbr == ((unsigned int)fd + 1) && fd >= 0)
+	if (curr->nbr == ((unsigned int)fd + 1))
 		return (curr);
 	while (curr->nbr)
 	{
-		if (!curr->next && fd >= 0)
+		if (!curr->next)
 		{
-			curr->next = malloc(sizeof(t_list));
+			curr->next = malloc(sizeof(t_list)); 
 			if (!curr->next)
 				return (NULL);
 			curr->next->content = NULL;
@@ -49,7 +49,7 @@ char	*get_to_second_line(char *content)
 	i1 = 0;
 	while (content[i1] && content[i1] != '\n')
 		i1++;
-	if (!content[i1])
+	if (!content[i1] || (content[i1] == '\n' && content[i1 + 1] == '\0'))
 	{
 		free(content);
 		return (NULL);
@@ -68,6 +68,7 @@ char	*get_to_second_line(char *content)
 char	*get_first_line(const char *content)
 {
 	int		i;
+	int		end;
 	char	*ret;
 
 	i = 0;
@@ -75,7 +76,10 @@ char	*get_first_line(const char *content)
 		return (NULL);
 	while (content[i] && content[i] != '\n')
 		i++;
-	ret = malloc(i + 2);
+	end = 1;
+	if (content[i] == '\n')
+		end++;
+	ret = malloc(i + end);
 	if (!ret)
 		return (NULL);
 	i = 0;
@@ -104,9 +108,10 @@ void	read_line(t_list *curr)
 		bytes_readed = read((curr->nbr - 1), concat, BUFFER_SIZE);
 		if (bytes_readed == -1)
 		{
-			free(curr->content);
 			free(concat);
+			free(curr->content);
 			curr->content = NULL;
+			curr->nbr = 0;
 			return ;
 		}
 		concat[bytes_readed] = '\0';
@@ -120,24 +125,38 @@ char	*get_next_line(int fd)
 	char			*ret;
 	static t_list	head;
 	t_list			*curr;
+	int				ctl;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	curr = which_file(&head, fd);
 	read_line(curr);
+	ctl = 0;
 	if (curr->content == NULL)
 	{
+		ctl = 1;
 		if (curr != &head)
 			curr->prev->next = curr->next;
 		if (curr->next)
 			curr->next->prev = curr->prev;
 		if (curr != &head)
+		{
 			free(curr);
-		if (curr == &head)
-			head.content = NULL;
-		return NULL;
+		}
+		return (NULL);
 	}
 	ret = get_first_line(curr->content);
 	curr->content = get_to_second_line(curr->content);
+	if (curr->content == NULL && curr != &head && !ctl)
+	{
+		if (curr->next)
+		{
+			curr->prev->next = curr->next;
+			curr->next->prev = curr->prev;
+		}
+		else
+			curr->prev->next = NULL;
+		free(curr);
+	}
 	return (ret);
 }

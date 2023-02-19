@@ -56,7 +56,10 @@ char	*get_to_second_line(char *content)
 	}
 	ret = malloc(ft_strlen(content) - i1);
 	if (!ret)
+	{
+		free(content);
 		return (NULL);
+	}
 	i2 = 0;
 	while (content[++i1])
 		ret[i2++] = content[i1];
@@ -129,6 +132,7 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
+
 	curr = which_file(&head, fd);
 	read_line(curr);
 	ctl = 0;
@@ -137,7 +141,7 @@ char	*get_next_line(int fd)
 		ctl = 1;
 		if (curr != &head)
 			curr->prev->next = curr->next;
-		if (curr->next)
+		if (curr->next && curr != &head)
 			curr->next->prev = curr->prev;
 		if (curr != &head)
 		{
